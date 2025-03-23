@@ -4,12 +4,15 @@ import newsBanner from "../images/news-banner.png"
 import { useQuery } from "@tanstack/react-query";
 import { fetchTvStationNews } from "@/app/api-services/APIServices";
 import Loader from "./Loader";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function TrendingNews() {
   const { data: newsData, isLoading} = useQuery({
     queryKey: ["tv-news"],
     queryFn: () => fetchTvStationNews(),
   });
+  let router = useRouter()
   return (
     <>
     <div className="bg-[#222222] p-4 rounded-2xl shadow-lg w-full max-w-sm">
@@ -36,10 +39,12 @@ export default function TrendingNews() {
       {/* News List */}
       <div className="space-y-3">
         {newsData?.slice(0, 6)?.map((news, index) => (
+          <Link href={news?.url} target="_blank">
           <div
             key={news.id}
             className={`flex items-start gap-3 p-2 rounded-lg ${index === 0 ? "bg-[#303030]" : "hover:bg-[#303030]"
               } transition`}
+            
           >
             {/* News Image */}
             <img
@@ -57,6 +62,7 @@ export default function TrendingNews() {
             {/* Bookmark Icon */}
             <Bookmark size={16} className="text-[#C3CC5A] cursor-pointer" />
           </div>
+          </Link>
         ))}
       </div>
     </div>
