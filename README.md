@@ -12,7 +12,7 @@ This project is a **Football Match Tracking Dashboard** built with **Next.js 14,
 ## **Installation & Setup**
 ### **1. Clone the Repository**
 ```sh
-git clone https://github.com/yourusername/football-score-dashboard.git
+git clone https://github.com/Deepshikha2625/football-dashboard.git
 cd football-score-dashboard
 ```
 
@@ -52,4 +52,7 @@ The app will be available at: **http://localhost:3000**
 - **Tailwind CSS** (Styling)
 - **Axios** (API requests)
 - **Moment.js** (Date formatting)
+
+## Avoiding CORS Errors
+To avoid CORS issues, a route.js file was created in the Next.js API routes. It acts as a proxy to fetch data from SportMonks without browser restrictions.
 
