@@ -9,9 +9,6 @@ export async function GET() {
     const { data } = await axios.get(API_URL);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to fetch matches" },
-      { status: 500 }
-    );
+     return NextResponse.json({ error: `Failed to fetch matches:${error}` }, { status: 500 });
   }
 }

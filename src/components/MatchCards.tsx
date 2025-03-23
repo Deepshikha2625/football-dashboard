@@ -10,15 +10,17 @@ import moment from "moment";
 import Image from "next/image";
 import { useState } from "react";
 import sportsBanner from "../images/sports-banner.png";
+import defaultImage from "../images/default-image.png";
+
 import Loader from "./Loader";
 export default function MatchDashboard() {
-    const [selectedCategory, setSelectedCategory] = useState("All Matches");
+    const [selectedCategory] = useState("All Matches");
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [viewCalendar, setViewCalendar] = useState(false)
     const dates = generateDateTabs();
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [tempDate, setTempDate] = useState<Date | null>(null);
-    const { data: matches = [], isLoading, isError, refetch } = useQuery({
+    const { data: matches = [], isLoading, refetch } = useQuery({
         queryKey: ["matches", selectedDate],
         queryFn: () => fetchMatches(selectedDate),
     });
@@ -145,7 +147,7 @@ export default function MatchDashboard() {
                                     {/* League Icon with Visible Background */}
                                     <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white p-1">
                                         <Image
-                                            src={data?.league?.image_path || "/fallback-image.png"}
+                                            src={data?.league?.image_path ?? defaultImage}
                                             alt={data?.league?.name}
                                             width={32}
                                             height={32}
@@ -173,7 +175,7 @@ export default function MatchDashboard() {
                                         {/* Home Team */}
                                         <div className="flex items-center space-x-2">
                                             <span className="text-white">{data?.participants[0]?.name}</span>
-                                            <Image src={data?.participants[0]?.image_path} alt="Home" width={20} height={20} />
+                                            <Image src={data?.participants[0]?.image_path ?? defaultImage} alt="Home" width={20} height={20} />
                                         </div>
 
                                         {/* Score */}
@@ -181,7 +183,7 @@ export default function MatchDashboard() {
 
                                         {/* Away Team */}
                                         <div className="flex items-center space-x-2">
-                                            <Image src={data?.participants[1]?.image_path} alt="Away" width={20} height={20} />
+                                            <Image src={data?.participants[1]?.image_path ?? defaultImage} alt="Away" width={20} height={20} />
                                             <span className="text-white">{data?.participants[1]?.name}</span>
                                         </div>
                                     </div>

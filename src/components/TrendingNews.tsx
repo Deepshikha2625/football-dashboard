@@ -1,18 +1,17 @@
+import { fetchTvStationNews } from "@/app/api-services/APIServices";
+import { useQuery } from "@tanstack/react-query";
 import { Bookmark } from "lucide-react";
 import Image from "next/image";
-import newsBanner from "../images/news-banner.png"
-import { useQuery } from "@tanstack/react-query";
-import { fetchTvStationNews } from "@/app/api-services/APIServices";
-import Loader from "./Loader";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import newsBanner from "../images/news-banner.png";
+import defaultImage from "../images/default-image.png";
+import Loader from "./Loader";
 
 export default function TrendingNews() {
   const { data: newsData, isLoading} = useQuery({
     queryKey: ["tv-news"],
     queryFn: () => fetchTvStationNews(),
   });
-  let router = useRouter()
   return (
     <>
     <div className="bg-[#222222] p-4 rounded-2xl shadow-lg w-full max-w-sm">
@@ -41,14 +40,14 @@ export default function TrendingNews() {
         {newsData?.slice(0, 6)?.map((news, index) => (
           <Link href={news?.url} target="_blank">
           <div
-            key={news.id}
+            key={news?.id}
             className={`flex items-start gap-3 p-2 rounded-lg ${index === 0 ? "bg-[#303030]" : "hover:bg-[#303030]"
               } transition`}
             
           >
             {/* News Image */}
             <img
-              src={news?.image_path}
+              src={news?.image_path ?? defaultImage}
               alt={news.name}
               className="w-14 h-14 object-cover rounded-lg"
             />
